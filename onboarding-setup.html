@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stint Pilot — SMS Opt-In &amp; Setup</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.55; color: #111; }
+    h1, h2 { line-height: 1.25; }
+    .box { border: 1px solid #ccc; border-radius: 8px; padding: 1rem 1.1rem; background: #fafafa; }
+    label { display: flex; gap: 0.6rem; align-items: flex-start; margin: 0.75rem 0; }
+    button { background: #0b57d0; color: #fff; border: 0; border-radius: 6px; padding: 0.65rem 1rem; font-size: 1rem; cursor: pointer; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .meta { color: #555; font-size: 0.95rem; }
+    code { background: #f0f0f0; padding: 0.1rem 0.3rem; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Stint Pilot SMS Opt-In &amp; Setup</h1>
+  <p class="meta">Operator: George Diab (sole proprietor) · Brand: George Diab / Stint Pilot · Program number: <strong>+1 (424) 473-1779</strong></p>
+
+  <p>Stint Pilot is a personal productivity SMS assistant for a limited pilot. After you opt in, you can receive <strong>transactional</strong> texts only: verification codes, work-session logging confirmations, and optional Google Calendar block confirmations. This is not a marketing list.</p>
+
+  <h2>How to opt in</h2>
+  <ol>
+    <li>Read the <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Service</a>.</li>
+    <li>Check the consent box below to agree to receive Stint Pilot SMS at a mobile number you control.</li>
+    <li>Text <strong>START</strong> to <strong>+1 (424) 473-1779</strong>, or continue setup in the pilot app when available.</li>
+  </ol>
+
+  <div class="box">
+    <p><strong>Program details</strong></p>
+    <ul>
+      <li>Message frequency varies (typically a few messages per active work session).</li>
+      <li>Message and data rates may apply.</li>
+      <li>Reply <strong>STOP</strong> to cancel. Reply <strong>HELP</strong> for help.</li>
+      <li>Support: <a href="mailto:george.diab@gmail.com">george.diab@gmail.com</a> · +1 702-858-4082</li>
+    </ul>
+    <label>
+      <input id="consent" type="checkbox">
+      <span>I agree to receive transactional SMS from George Diab / Stint Pilot at +1 (424) 473-1779 for verification, session logging, and calendar confirmations. I understand message frequency varies, message and data rates may apply, and I can reply STOP to unsubscribe or HELP for help. I have read the <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Service</a>.</span>
+    </label>
+    <p id="next" hidden>
+      <strong>You’re opted in for this pilot.</strong> Text <code>START</code> to <code>+14244731779</code> from your handset to begin. Keep this page for your records.
+    </p>
+    <button id="btn" type="button" disabled>Confirm SMS opt-in</button>
+  </div>
+
+  <p class="meta" style="margin-top:1.5rem"><a href="/">Home</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></p>
+  <script>
+    const c = document.getElementById('consent');
+    const b = document.getElementById('btn');
+    const n = document.getElementById('next');
+    c.addEventListener('change', () => { b.disabled = !c.checked; });
+    b.addEventListener('click', () => {
+      if (!c.checked) return;
+      n.hidden = false;
+      b.textContent = 'Opt-in recorded on this device';
+      b.disabled = true;
+    });
+  </script>
+</body>
+</html>
