@@ -9,12 +9,15 @@ app.get("/", (_req, res) => {
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Stint Pilot</title>
 <style>body{font-family:system-ui,sans-serif;max-width:42rem;margin:2rem auto;padding:0 1rem;line-height:1.55}
-a{color:#0b57d0}</style></head>
+a{color:#0b57d0}.note{background:#f6f8fa;border:1px solid #ddd;border-radius:8px;padding:0.9rem 1rem}</style></head>
 <body>
 <h1>Stint Pilot</h1>
-<p>Personal productivity SMS assistant operated by <strong>George Diab</strong> (sole proprietor) for a limited pilot.</p>
-<p>Program number: <strong>+1 (424) 473-1779</strong>. Transactional texts only (verification, session logging, optional calendar confirmations). Message frequency varies. Message and data rates may apply. Reply <strong>STOP</strong> to cancel, <strong>HELP</strong> for help.</p>
-<p><a href="/onboarding/setup"><strong>SMS opt-in &amp; setup</strong></a></p>
+<p>Personal productivity pilot operated by <strong>George Diab</strong> (sole proprietor). Use the website to review the pilot and complete setup.</p>
+<div class="note">
+<p><strong>SMS is optional.</strong> You can use Stint Pilot and complete website setup <em>without</em> agreeing to receive text messages. Messaging consent is never required to access the service.</p>
+</div>
+<p>If you separately opt in, transactional texts only may be sent from <strong>+1 (424) 473-1779</strong> (verification, session logging, optional calendar confirmations). Message frequency varies. Message and data rates may apply. Reply <strong>STOP</strong> to cancel, <strong>HELP</strong> for help.</p>
+<p><a href="/onboarding/setup"><strong>Setup &amp; optional SMS opt-in</strong></a></p>
 <p><a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms of Service</a></p>
 </body></html>`);
 });
