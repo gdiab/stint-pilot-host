@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stint Pilot — Setup &amp; Optional SMS</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.55; color: #111; }
+    h1, h2 { line-height: 1.25; }
+    .box { border: 1px solid #ccc; border-radius: 8px; padding: 1rem 1.1rem; background: #fafafa; margin: 1rem 0; }
+    .ok { border-color: #8bc34a; background: #f4faf0; }
+    label { display: flex; gap: 0.6rem; align-items: flex-start; margin: 0.75rem 0; }
+    button { background: #0b57d0; color: #fff; border: 0; border-radius: 6px; padding: 0.65rem 1rem; font-size: 1rem; cursor: pointer; margin-right: 0.5rem; margin-top: 0.35rem; }
+    button.secondary { background: #555; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .meta { color: #555; font-size: 0.95rem; }
+    code { background: #f0f0f0; padding: 0.1rem 0.3rem; border-radius: 4px; }
+    .badge { display: inline-block; background: #e8f0fe; color: #174ea6; font-size: 0.85rem; padding: 0.15rem 0.5rem; border-radius: 999px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Stint Pilot Setup</h1>
+  <p class="meta">Operator: George Diab (sole proprietor) · Brand: George Diab / Stint Pilot · Program number: <strong>+1 (424) 473-1779</strong></p>
+
+  <p><span class="badge">SMS optional</span> Stint Pilot is a personal productivity web + SMS pilot. <strong>Consent to SMS is voluntary and is not required to use the service, complete this setup page, or finish signup.</strong> You may decline SMS and still use the website pilot.</p>
+
+  <h2>1. Use the service without SMS</h2>
+  <div class="box">
+    <p>Read the <a href="./privacy.html">Privacy Policy</a> and <a href="./terms.html">Terms of Service</a>. You can finish setup for web use without opting into texts.</p>
+    <button id="skip" type="button" class="secondary">Continue without SMS</button>
+    <p id="skipped" hidden class="ok" style="margin-top:0.75rem"><strong>Setup complete without SMS.</strong> No messaging consent was recorded. You may use the website pilot. You can return later to opt in to SMS if you want.</p>
+  </div>
+
+  <h2>2. Optional: opt in to transactional SMS</h2>
+  <p>Only if you want texts. This step is separate from Terms/Privacy acceptance and is not bundled with required agreements.</p>
+  <ol>
+    <li>Keep the SMS consent checkbox unchecked by default (or leave it unchecked to decline).</li>
+    <li>If you want SMS, check the optional consent box below for transactional messages from George Diab / Stint Pilot at +1 (424) 473-1779.</li>
+    <li>Click <strong>Confirm SMS opt-in</strong>. That website confirmation is the only opt-in method for this campaign. Texting the number without completing this opt-in does not enroll you.</li>
+  </ol>
+
+  <div class="box">
+    <p><strong>Program details (if you opt in)</strong></p>
+    <ul>
+      <li>Message types: verification codes, work-session logging confirmations, and optional Google Calendar block confirmations. Not marketing.</li>
+      <li>Message frequency varies (typically a few messages per active work session).</li>
+      <li>Message and data rates may apply.</li>
+      <li>Reply <strong>STOP</strong> to cancel. Reply <strong>HELP</strong> for help.</li>
+      <li>Support: <a href="mailto:george.diab@gmail.com">george.diab@gmail.com</a> · +1 702-858-4082</li>
+    </ul>
+    <label>
+      <input id="consent" type="checkbox">
+      <span><strong>(Optional)</strong> I agree to receive transactional SMS from George Diab / Stint Pilot at +1 (424) 473-1779 for verification, session logging, and calendar confirmations. I understand message frequency varies, message and data rates may apply, and I can reply STOP to unsubscribe or HELP for help. SMS consent is not required to use Stint Pilot. I have read the <a href="./privacy.html">Privacy Policy</a> and <a href="./terms.html">Terms of Service</a>.</span>
+    </label>
+    <p id="next" hidden class="ok">
+      <strong>You’re opted in for this pilot’s SMS.</strong> You may now text <code>+14244731779</code> from your handset for verification and session logging. Keep this page for your records.
+    </p>
+    <button id="btn" type="button" disabled>Confirm SMS opt-in</button>
+    <button id="decline" type="button" class="secondary">Decline SMS</button>
+  </div>
+
+  <p class="meta" style="margin-top:1.5rem"><a href="./index.html">Home</a> · <a href="./privacy.html">Privacy</a> · <a href="./terms.html">Terms</a></p>
+  <script>
+    const c = document.getElementById('consent');
+    const b = document.getElementById('btn');
+    const n = document.getElementById('next');
+    const skip = document.getElementById('skip');
+    const skipped = document.getElementById('skipped');
+    const decline = document.getElementById('decline');
+    c.addEventListener('change', () => { b.disabled = !c.checked; });
+    b.addEventListener('click', () => {
+      if (!c.checked) return;
+      n.hidden = false;
+      skipped.hidden = true;
+      b.textContent = 'Opt-in recorded on this device';
+      b.disabled = true;
+    });
+    function declineSms() {
+      c.checked = false;
+      b.disabled = true;
+      n.hidden = true;
+      skipped.hidden = false;
+    }
+    skip.addEventListener('click', declineSms);
+    decline.addEventListener('click', declineSms);
+  </script>
+</body>
+</html>
