@@ -10,6 +10,9 @@
     .box { border: 1px solid #ccc; border-radius: 8px; padding: 1rem 1.1rem; background: #fafafa; margin: 1rem 0; }
     .ok { border-color: #8bc34a; background: #f4faf0; }
     label { display: flex; gap: 0.6rem; align-items: flex-start; margin: 0.75rem 0; }
+    label.field { display: block; margin: 0.75rem 0; }
+    label.field span { display: block; font-weight: 600; margin-bottom: 0.35rem; }
+    input[type="tel"] { width: 100%; max-width: 22rem; box-sizing: border-box; padding: 0.55rem 0.65rem; font-size: 1rem; border: 1px solid #bbb; border-radius: 6px; }
     button { background: #0b57d0; color: #fff; border: 0; border-radius: 6px; padding: 0.65rem 1rem; font-size: 1rem; cursor: pointer; margin-right: 0.5rem; margin-top: 0.35rem; }
     button.secondary { background: #555; }
     button:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -34,9 +37,10 @@
   <h2>2. Optional: opt in to transactional SMS</h2>
   <p>Only if you want texts. This step is separate from Terms/Privacy acceptance and is not bundled with required agreements.</p>
   <ol>
+    <li>Enter your mobile phone number below.</li>
     <li>Keep the SMS consent checkbox unchecked by default (or leave it unchecked to decline).</li>
     <li>If you want SMS, check the optional consent box below for transactional messages from George Diab / Stint Pilot at +1 (424) 473-1779.</li>
-    <li>Click <strong>Confirm SMS opt-in</strong>. That website confirmation is the only opt-in method for this campaign. Texting the number without completing this opt-in does not enroll you.</li>
+    <li>Click <strong>Confirm SMS opt-in</strong>. Confirm requires both a mobile number and the optional consent checkbox. That website confirmation is the only opt-in method for this campaign. Texting the number without completing this website opt-in does not enroll you.</li>
   </ol>
 
   <div class="box">
@@ -48,12 +52,17 @@
       <li>Reply <strong>STOP</strong> to cancel. Reply <strong>HELP</strong> for help.</li>
       <li>Support: <a href="mailto:george.diab@gmail.com">george.diab@gmail.com</a> · +1 702-858-4082</li>
     </ul>
+    <label class="field" for="phone">
+      <span>Mobile phone number</span>
+      <input id="phone" type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+1 (555) 555-5555" aria-describedby="phone-hint">
+    </label>
+    <p id="phone-hint" class="meta">Required only if you Confirm SMS opt-in. Not required for Continue without SMS or Decline SMS.</p>
     <label>
       <input id="consent" type="checkbox">
       <span><strong>(Optional)</strong> I agree to receive transactional SMS from George Diab / Stint Pilot at +1 (424) 473-1779 for verification, session logging, and calendar confirmations. I understand message frequency varies, message and data rates may apply, and I can reply STOP to unsubscribe or HELP for help. SMS consent is not required to use Stint Pilot. I have read the <a href="./privacy.html">Privacy Policy</a> and <a href="./terms.html">Terms of Service</a>.</span>
     </label>
     <p id="next" hidden class="ok">
-      <strong>You’re opted in for this pilot’s SMS.</strong> You may now text <code>+14244731779</code> from your handset for verification and session logging. Keep this page for your records.
+      <strong>You’re opted in for this pilot’s SMS.</strong> Opt-in was recorded on this website only. Texting <code>+1 (424) 473-1779</code> without completing this website opt-in does not enroll you. Keep this page for your records.
     </p>
     <button id="btn" type="button" disabled>Confirm SMS opt-in</button>
     <button id="decline" type="button" class="secondary">Decline SMS</button>
@@ -62,27 +71,41 @@
   <p class="meta" style="margin-top:1.5rem"><a href="./index.html">Home</a> · <a href="./privacy.html">Privacy</a> · <a href="./terms.html">Terms</a></p>
   <script>
     const c = document.getElementById('consent');
+    const phone = document.getElementById('phone');
     const b = document.getElementById('btn');
     const n = document.getElementById('next');
     const skip = document.getElementById('skip');
     const skipped = document.getElementById('skipped');
     const decline = document.getElementById('decline');
-    c.addEventListener('change', () => { b.disabled = !c.checked; });
+    function phoneOk() {
+      return phone.value.replace(/\D/g, '').length >= 10;
+    }
+    function syncConfirm() {
+      b.disabled = !(c.checked && phoneOk());
+    }
+    c.addEventListener('change', syncConfirm);
+    phone.addEventListener('input', syncConfirm);
     b.addEventListener('click', () => {
-      if (!c.checked) return;
+      if (!c.checked || !phoneOk()) return;
       n.hidden = false;
       skipped.hidden = true;
-      b.textContent = 'Opt-in recorded on this device';
+      b.textContent = 'Opt-in recorded on this website';
       b.disabled = true;
+      phone.readOnly = true;
+      c.disabled = true;
     });
     function declineSms() {
       c.checked = false;
       b.disabled = true;
       n.hidden = true;
       skipped.hidden = false;
+      phone.readOnly = false;
+      c.disabled = false;
+      syncConfirm();
     }
     skip.addEventListener('click', declineSms);
     decline.addEventListener('click', declineSms);
+    syncConfirm();
   </script>
 </body>
 </html>
